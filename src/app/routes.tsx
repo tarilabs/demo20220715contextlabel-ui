@@ -35,35 +35,35 @@ const routes: AppRouteConfig[] = [
     exact: true,
     label: 'Dashboard',
     path: '/',
-    title: 'PatternFly Seed | Main Dashboard',
+    title: 'Drools YaRD context label demo',
   },
-  {
-    component: Support,
-    exact: true,
-    isAsync: true,
-    label: 'Support',
-    path: '/support',
-    title: 'PatternFly Seed | Support Page',
-  },
-  {
-    label: 'Settings',
-    routes: [
-      {
-        component: GeneralSettings,
-        exact: true,
-        label: 'General',
-        path: '/settings/general',
-        title: 'PatternFly Seed | General Settings',
-      },
-      {
-        component: ProfileSettings,
-        exact: true,
-        label: 'Profile',
-        path: '/settings/profile',
-        title: 'PatternFly Seed | Profile Settings',
-      },
-    ],
-  },
+  // {
+  //   component: Support,
+  //   exact: true,
+  //   isAsync: true,
+  //   label: 'Support',
+  //   path: '/support',
+  //   title: 'PatternFly Seed | Support Page',
+  // },
+  // {
+  //   label: 'Settings',
+  //   routes: [
+  //     {
+  //       component: GeneralSettings,
+  //       exact: true,
+  //       label: 'General',
+  //       path: '/settings/general',
+  //       title: 'PatternFly Seed | General Settings',
+  //     },
+  //     {
+  //       component: ProfileSettings,
+  //       exact: true,
+  //       label: 'Profile',
+  //       path: '/settings/profile',
+  //       title: 'PatternFly Seed | Profile Settings',
+  //     },
+  //   ],
+  // },
 ];
 
 // a custom hook for sending focus to the primary content container
