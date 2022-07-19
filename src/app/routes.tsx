@@ -3,7 +3,8 @@ import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { accessibleRouteChangeHandler } from '@app/utils/utils';
 import { Dashboard } from '@app/Dashboard/Dashboard';
 import { Support } from '@app/Support/Support';
-import { GeneralSettings } from '@app/Settings/General/GeneralSettings';
+import { ParentSearch } from '@app/Search/Parent/ParentSearch';
+import { MatchingSearch } from '@app/Search/Matching/MatchingSearch';
 import { ProfileSettings } from '@app/Settings/Profile/ProfileSettings';
 import { NotFound } from '@app/NotFound/NotFound';
 import { useDocumentTitle } from '@app/utils/useDocumentTitle';
@@ -37,33 +38,25 @@ const routes: AppRouteConfig[] = [
     path: '/',
     title: 'Drools YaRD context label demo',
   },
-  // {
-  //   component: Support,
-  //   exact: true,
-  //   isAsync: true,
-  //   label: 'Support',
-  //   path: '/support',
-  //   title: 'PatternFly Seed | Support Page',
-  // },
-  // {
-  //   label: 'Settings',
-  //   routes: [
-  //     {
-  //       component: GeneralSettings,
-  //       exact: true,
-  //       label: 'General',
-  //       path: '/settings/general',
-  //       title: 'PatternFly Seed | General Settings',
-  //     },
-  //     {
-  //       component: ProfileSettings,
-  //       exact: true,
-  //       label: 'Profile',
-  //       path: '/settings/profile',
-  //       title: 'PatternFly Seed | Profile Settings',
-  //     },
-  //   ],
-  // },
+  {
+    label: 'Search',
+    routes: [
+      {
+        component: ParentSearch,
+        exact: true,
+        label: 'by parent',
+        path: '/search/parent',
+        title: 'Search by Parent',
+      },
+      {
+        component: MatchingSearch,
+        exact: true,
+        label: 'matching',
+        path: '/search/matching',
+        title: 'Search Matching',
+      },
+    ],
+  },
 ];
 
 // a custom hook for sending focus to the primary content container

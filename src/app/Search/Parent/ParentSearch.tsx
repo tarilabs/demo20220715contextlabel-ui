@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { PageSection, Title } from '@patternfly/react-core';
+import { SearchInput } from '@patternfly/react-core';
 import {
   Accordion,
   AccordionItem,
@@ -22,6 +23,25 @@ import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-i
 import { OtterIcon } from '@patternfly/react-icons';
 import { CodeBlock, CodeBlockAction, CodeBlockCode, ClipboardCopyButton } from '@patternfly/react-core';
 
+
+function MyCard() {
+  const [term, setTerm] = useState("");
+
+  const searchTermUpdated = (val: string) => {
+    setTerm(val);
+  };
+  return (
+    <>
+      <SearchInput
+        placeholder="Find by Parent"
+        value={term}
+        onChange={v => searchTermUpdated(v)}
+        onClear={evt => searchTermUpdated('')}
+      />
+      <MyComponent param1={term}/>
+    </>
+  );
+}
 interface TestComponentProps {
   str: string[];
 }
@@ -35,8 +55,7 @@ function TestComponent({str}: TestComponentProps) {
     </>
   )
 }
-
-function MyComponent() {
+function MyComponent(props: { param1: string }) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
@@ -52,32 +71,31 @@ function MyComponent() {
       setExpanded(id);
     }
   };
-
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
   useEffect(() => {
-    fetch("/hello")
+    if (props.param1 == null || props.param1 === "") {
+      setIsLoaded(false);
+      return;
+    }
+    fetch("/query/under/"+props.param1)
       .then(res => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
           setItems(result);
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
           setIsLoaded(true);
           setError(error);
         }
       )
-  }, [])
+  }, [props.param1])
 
   if (error) {
     return <div>Error: {error["message"]}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div>Type some search term to begin search...</div>;
+  } else if (items.length == 0) {
+    return <div>0 results.</div>;
   } else {
     return (
       <>
@@ -131,12 +149,13 @@ function MyComponent() {
   }
 }
 
-
-const Dashboard: React.FunctionComponent = () => (
+const ParentSearch: React.FunctionComponent = () => (
   <PageSection>
-    <Title headingLevel="h1" size="lg">List all context cases:</Title>
-    <MyComponent/>
+    <Title headingLevel="h1" size="lg">
+      Parent Search
+    </Title>
+    <MyCard/>
   </PageSection>
-)
+);
 
-export { Dashboard };
+export { ParentSearch as ParentSearch };
